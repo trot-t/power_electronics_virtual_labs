@@ -97,7 +97,7 @@
 
 
 \title{Исследование неуправляемых выпрямителей и фильтров выпрямленного тока}
-\author{}
+\author{Artem N Prokshin}
 % Конец преамбулы
 \begin{document}
 %\maketitle
@@ -112,7 +112,7 @@
  %\draw[domain=-5:5, help lines, smooth]
  %       plot ({\x},{0.2*(\x-\xa)*(\x-\xb)});
 %\end{tikzpicture}
-%\section{Прецизионные схемы и малошумящая аппаратура}
+
 \section{Исследование неуправляемых выпрямителей и фильтров выпрямленного тока}
 
 {\bf Целью} работы является исследование характеристик различных вариантов схем неуправляемых выпрямителей однофазного напряжения 
@@ -127,15 +127,16 @@
 \label{setup}
 \end{figure}
 
-Виртуальная установка представленная на схеме \ref{setup} запускается с помощью программы \href{http://www.ti.com/tool/TINA-TI}{tina} с бесплатной лицензией.
+Виртуальная установка, представленная на схеме \ref{setup}, запускается с помощью программы \href{http://www.ti.com/tool/TINA-TI}{tina} с бесплатной лицензией.
 
 На виртуальной установке с помощью тумблеров можно исследовать следующие схемы выпрямителей:
 
-\begin{itemize}
-\item однофазную однополупериодную;
-\item однофазную однополупериодную с шунтирующим диодом;
-\item однофазную мостовую.
-\end{itemize}
+\begin{enumerate}
+\item \label{one-phase-half-period} однофазную однополупериодную;
+\item \label{one-phase-half-period-with-shunt} однофазную однополупериодную с шунтирующим диодом;
+\item \label{two-half-period} однофазную двухполупериодную с выведенной нулевой точкой на вторичной обмотке преобразовательного трансформатора;
+\item \label{one-phase-bridge} однофазную мостовую.
+\end{enumerate}
 
 Далее следовать методике описанной в \href{https://github.com/trot-t/power_el_method_old/blob/master/%D0%A1%D0%B8%D0%BB%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%BA%D0%B0%20%D0%BB%D0%B0%D0%B1%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B5.pdf}{методичке} для реальной лабораторной установке.
 
@@ -143,7 +144,11 @@
 \subsection{порядок выполнения измерений на виртуальной установке}
 
 \begin{itemize}
-	\item Открыть \href{https://github.com/trot-t/power_electronics_virtual_labs/blob/master/power_electronic_L2.TSC}{схему} в программе tina;
+	\item Открыть \href{https://github.com/trot-t/power_electronics_virtual_labs/blob/master/power_electronic_L2.TSC}{схему 
+		для пунктов} \ref{one-phase-half-period}, \ref{one-phase-half-period-with-shunt}, \ref{one-phase-bridge} 
+		или \href{https://github.com/trot-t/power_electronics_virtual_labs/blob/master/power_electronics_L2_tap.TSC}{схему 
+		для пункта \ref{two-half-period}}
+		в программе \href{http://www.ti.com/tool/TINA-TI}{tina};
 \item С помощью тумблеров $S_3,S_{11},S_{13},S_{14},S_{16}, S_{17}$ составить схему выпрямителя, указанную преподавателем;
 \item Выбрать в меню анализ $\Rightarrow$ переходных процессов (transient analisys) $\Rightarrow$ для нескольких периодов колебаний 
 	входной сети, 
@@ -151,11 +156,11 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.4]{analisys}
-\caption{анализ переходных процессов}
+\caption{выбор начального и конченого времен в анализе переходных процессов}
 \label{analisys}
 \end{figure}	
 
-\item получаем мгновенные значения для токов и напряжений вида 
+\item получаем графики для мгновенных значений токов и напряжений: 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.3]{result}
@@ -168,7 +173,7 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.3]{result_splitted}
-\caption{графики всех параметров}
+\caption{отдельные графики токов и напряжений}
 \label{result_splitted}
 \end{figure}  
 
@@ -204,7 +209,7 @@
 \centering
 \begin{tabular}{lcl}
 \toprule
-	$R_\textcyrillic{тр}$ &=& 8 ом\\
+	$R_\textcyrillic{трансформатора}$ &=& 8 ом\\
 %\midrule
 	$R_\textcyrillic{вентиля динамическое}$ &=& 1,6 ом\\
 %\midrule
