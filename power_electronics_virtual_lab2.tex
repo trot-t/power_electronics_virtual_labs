@@ -41,6 +41,10 @@
 \usetikzlibrary{positioning}
 \usepackage[european,cuteinductors,smartlabels,siunitx]{circuitikz}
 
+%% 
+\usepackage{pdflscape}
+\usepackage{afterpage}
+
 %%% Межстрочный интервал
 \usepackage{setspace}
 
@@ -226,8 +230,20 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.8]{lab2_real}
-\caption{фотография реальной установки}
+\caption{фотография реальной лабораторной установки}
 \label{result_rms_avg}
 \end{figure}
+
+
+
+\afterpage{%
+\newgeometry{left=20mm, top=0mm, right=20mm, bottom=2mm, nohead}
+% material for this page
+\begin{landscape} 
+	\include{l2_e3}
+\end{landscape}
+\clearpage
+\restoregeometry
+} % end of \afterpage{...} material
 
 \end{document}
