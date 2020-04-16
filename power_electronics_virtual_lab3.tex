@@ -1,0 +1,230 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{extsizes}
+
+%\usepackage[T2A]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage[TS1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{tikz}
+\usepackage[european,cuteinductors,smartlabels]{circuitikz}
+
+\usepackage{amsmath,amsfonts}
+\usepackage{amssymb}
+\usepackage[scr]{rsfso}
+
+\usepackage{gnuplottex}
+
+
+%%% Межстрочный интервал
+\usepackage{setspace}
+
+%% таблицы
+\usepackage{booktabs}
+
+%% для кода
+\usepackage{color}
+\usepackage{listingsutf8}
+
+
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{lightblue}{rgb}{0,0,1}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{blue}{rgb}{0,0,1}
+\definecolor{violet}{rgb}{0.5,0,0.5}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+
+\lstset{%
+  language=C++,%
+  morekeywords={constexpr,nullptr,size_t,uint32_t,assert,override,final},%
+  basicstyle=\ttfamily\footnotesize,%
+  sensitive=true,%
+  keywordstyle=\color{blue},%
+  stringstyle=\color{darkgreen},%
+  commentstyle=\color{violet},%
+  showstringspaces=false,%
+  tabsize=2,%
+  frame=leftline,
+  rulecolor=\color{lightblue},
+  xleftmargin=10pt,
+}
+
+\lstset{
+%extendedchars=\true,
+%inputencoding=utf8x,   
+  numberstyle=\tiny,
+  numbers=left,
+  numbersep=10pt,
+  xleftmargin=10pt,
+  %framesep=4.5mm,
+  %framexleftmargin=2.5mm,
+  framexleftmargin=5pt,
+  framesep=15pt,
+  fillcolor=\color{lightgrey},
+}
+
+
+\title{Повышающий преобразователь}
+
+\begin{document}
+\section{повышающий преобразователь}
+
+\subsection{определение номиналов элементов схемы}
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+        \draw(0,3) to[L,l=L,o-] (3,3) -- (6,3) to [C,l_=C] (6,0) to[short,-o] (0,0);
+        \draw(4,3) to[short] (8.5,3) to[R,l_=R] (8.5,0) to [short] (6,0);
+        \draw(3,0) to[cosw,l_=SW] (3,3);
+        \draw (3,3) to[D-,l=D] (6,3);
+        \draw[->,>=latex] (9.2,2.1) -- (9.2,0.9) node[midway,right] {$i_1$};
+        \draw[->,>=latex] (6.7,2.1) -- (6.7,0.9) node[midway,right] {$i_2$};
+        \draw (0,1.5) node {$U_\textcyrillic{пит.}$};
+\end{tikzpicture}
+\caption{повышающий преобразователь}
+\end{figure}
+
+$U_\textcyrillic{пит.}$ -- заданное значение 100В. Подводимая мощность 100Вт. Частота переключения ключа $SW$ 5кГц. 
+$U_R = U_\textcyrillic{нагр.}$ -- выходное напряжение на нагрузке $R$ зависит от варианта:
+
+\begin{tabular}{c|c}
+\toprule
+\textnumero п/п & $U_\textcyrillic{вых}$ (В) \\
+\midrule
+1 & 110 \\
+2 &115 \\
+3 & 120 \\
+4 & 125 \\
+5 & 130 \\ 
+6 & 135 \\
+7 & 140 \\
+8 & 145 \\
+9 & 150 \\
+10 &155 \\
+11 & 160 \\
+12 & 165 \\
+13 & 170 \\
+14 & 175 \\
+15 & 180 \\
+16 & 185 \\
+17 & 190 \\
+18 &195 \\
+19 & 200 \\
+\bottomrule
+\end{tabular}
+ 
+Требуется определить номиналы элементов $R$, $L$, $C$ исходя из условий: 
+\begin{itemize}
+\item сила тока на дросселе $I_L(t)$ изменяется во времени не более чем
+$I_{L\textcyrillic{ср.}}\pm 10$\%,
+\item напряжение на нагрузке $U_R(t)$ изменяется во времени не более чем $U_{R\textcyrillic{ср.}}\pm 10$\%.  
+\end{itemize}
+
+
+
+Рассмотрим работу преобразователя в двух стадиях:
+
+\subsection{фаза заряда  дросселя}
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+\draw[thin, ->, >=latex] (0,0) -- (6,0) node[below] {$t$};
+\draw[thin, ->, >=latex] (0,0) -- (0,4) node[left] {$i(t)$};
+\draw (0.5,1.5) -- (1.5,3) -- (3,1.5) -- (4,3) -- (5.5,1.5);
+\draw[dashed] (5.8,2.25) -- (0,2.25) node[left] {$I_\textcyrillic{ср.}$};
+\draw[thin] (0.5,1.5) -- (0.5,-0.8) (1.5,3) -- (1.5,-0.8) (3,1.5) -- (3,-0.8);
+\draw[thin,<->] (0.5,-0.5) -- (1.5,-0.5) node[midway, below] {$t_\textcyrillic{з}$};
+\draw[thin,<->] (1.5,-0.5) -- (3,-0.5) node[midway, below] {$t_\textcyrillic{р}$};
+\draw[thin] (0.5,-1.2) -- (0.5,-1.8)  (3,-1.2) -- (3,-1.8);
+\draw[thin,<->] (0.5,-1.5) -- (3,-1.5) node[midway, below] {$T$};
+\end{tikzpicture}
+\end{figure}
+
+В установившемся режиме
+\begin{equation}
+U_\textcyrillic{нагр.} = U_\textcyrillic{пит.}\frac{t_\textcyrillic{з} + t_\textcyrillic{р}}{ t_\textcyrillic{р}} =  U_\textcyrillic{пит.}\frac{T}{ t_\textcyrillic{р}}
+\end{equation}
+
+Ключ замкнут, дроссель соединен с землей, диод через себя не дает разрядиться конденсатору, конденсатор разряжается через нагрузку.
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+\draw(0,2) to [L,o-] (2,2) -- (2,0) to[short,-o] (0,0);
+\draw ({4+0},0) to[C] ({4+0},2) -- ({4+2},2) to[R] ({4+2},0) -- ({4+0},0);
+\end{tikzpicture}
+\caption{фаза заряда дросселя}
+\end{figure}
+
+
+напряжение на дросселе
+$$
+U_L = L\frac{\partial i_\textcyrillic{з}}{\partial t}
+$$
+или, интегрируя
+
+$$
+ i(t_\textcyrillic{з}) = i_{(0)} + \frac{U}{L} t_\textcyrillic{з}
+$$
+
+Принимая $i_{(0)}$ равным нулю (условие, когда наступает прерывистый режим) получаем что максимальный 
+${\displaystyle i_{max} =  \frac{U}{L} t_\textcyrillic{з}}$.  
+Ток меняется от 0 до $i_{max}$, значит 
+\begin{equation}
+i_\textcyrillic{среднее} = i_{max}/2 = 
+\frac{U}{2L} t_\textcyrillic{з}
+\end{equation}
+
+или, иначе, ток меняется 
+
+$$i(t) = i_\textcyrillic{среднее} \pm 100\%$$
+
+Отсюда получаем минимальный $L$ необходимый для отсутствия прерывистого режима:
+$$
+L_{min} = \frac{U}{2} \frac{t_\textcyrillic{з}}{i_{max}}
+$$
+
+Средний ток получаем из заданной подводимой мощности 100Вт и напряжения батареи 100В:
+$$
+i_\textcyrillic{среднее}\cdot U = P
+$$
+
+
+Если предполагаем, что $i_L$ через дроссель меняется 
+$$i(t) = i_\textcyrillic{среднее} \pm 10\%$$,
+
+то индуктивность дросселя в 10 раз больше чем $L_{min}$
+
+
+
+Номинал конденсатора определим исходя из того что за время $t_\textcyrillic{з}$ через нагрузку $R$ разряжается на 20\%
+от максимального заряда (или заряд конденсатора меняется $U_\textcyrillic{нагр. ср.} \pm 10\%$). 
+
+
+\subsection{фаза разряда дросселя} 
+%\begin{figure}[!ht]
+%\centering
+\begin{tikzpicture}
+        \draw(0,3) to[L,l=L,o-] (3,3) -- (4,3) to [C,l_=C] (4,0) to[short,-o] (0,0);
+        \draw(4,3) to[short,*-] (6.5,3) to[R,l_=R] (6.5,0) to [short,-*] (4,0);
+        \draw[->,>=latex] (7.2,2.1) -- (7.2,0.9) node[midway,right] {$i_1$};
+        \draw[->,>=latex] (4.7,2.1) -- (4.7,0.9) node[midway,right] {$i_2$};
+        \draw (0,1.5) node {$U_1$};
+\end{tikzpicture}
+%\caption{фаза разряда дросселя}
+%\end{figure}
+
+\subsection{Выполнение работы на виртуальной установке}
+
+Определив номиналы выполняем работу следуя методичке "Исследование повышающего широтно-импульсного преобразователя постоянного напряжения"
+на виртуальной установке.
+
+
+
+\end{document}
