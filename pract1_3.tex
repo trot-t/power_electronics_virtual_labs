@@ -8,9 +8,9 @@
 \usepackage{booktabs}
 \usepackage[left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, footskip=7mm]{geometry} % настройки полей документа
 
-\title{Практическая работа 1} % знак подчеркивание - символ построчного индекса, замаскируем его обратным слешом
+\title{Практическая работа 1} 
 \author{Прокшин А.Н.}
-\date{April 2020}
+\date{Апрель 2020}
 
 \begin{document}
 
@@ -22,7 +22,7 @@
 \newcommand{\Fi}{54.08/180*3.14159265} % угол между фазами K и K+1  54.08 градусов
 
 Фаза $k+1$ отстает от фазы $k$ на угол $\varphi=360^\circ/m$, где $m$-пульсность схемы. Заданное значение угла $\varphi$ в градусах вносим в файл-исходник 
-вместо значения параметра $\backslash Fi$, которое для примера выбрано  $54.08$:
+вместо значения параметра $\backslash Fi$, которое для примера выбрано равным $54.08$:
 
 \begin{verbatim}
 \newcommand{\Fi}{54.08/180*3.14159265}
@@ -43,7 +43,7 @@ sin(\omega t) = sin(\omega t - \varphi)
 
 
 решаем уравнение \ref{eq1} в любом математическом пакете, например, в \href{http://www.reduce-algebra.com/obtaining.php}{reduce-algebra}, 
-находим  x-координату точки пересечения графиков фаз (в моем случае 2.043). получено следующим образом:
+находим  x-координату точки пересечения графиков фаз (в моем случае 2.043) получено следующим образом:
 \begin{verbatim}
 on rounded; %reduce-algebra вычисляет в символьном виде, вычислить округленно
 solve(sin(x) - sin(x-54.08/180*3.14159265),x);
@@ -187,7 +187,7 @@ solve(sin(x) - sin(x-54.08/180*3.14159265),x);
 \draw[<->] ({3.14/2}, {1.4}) -- ({3.14},{1.4}) node[midway, above] {$\alpha$};
 \end{verbatim}
 
-Данный пример доступен \href{https://www.overleaf.com/read/jrvwwzycpzvp}{по адресу}:
+Данный файл-шаблон отчета доступен \href{https://www.overleaf.com/read/jrvwwzycpzvp}{по адресу}:
 \begin{verbatim}
 https://www.overleaf.com/read/jrvwwzycpzvp
 \end{verbatim}
