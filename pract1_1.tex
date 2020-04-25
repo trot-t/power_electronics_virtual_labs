@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}  % добавили русский
+\usepackage{tikz}                    % черчение графиков
+\usepackage{siunitx}                 % в электрических схемах номиналы элементов
+\usepackage[american,cuteinductors,smartlabels]{circuitikz} % черчение электрических схем
+
+
+\title{power\_electronics\_pract1} % знак подчеркивание - символ построчного индекса, замаскируем его обратным слешом
+\author{taybola }
+\date{April 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\begin{circuitikz}
+	\draw (0,0) -- (7,0); % отрезок, в будущем ось X
+\end{circuitikz}
+
+\begin{circuitikz}
+\draw[thin,->] (0,0) -- (7,0); %сделаем ось красивее
+\draw[thin,->] (0,0) -- (0,2); % ось y
+\end{circuitikz}
+
+
+\begin{circuitikz}
+	\draw[thin,->] (0,0) -- (7,0) node[below] {$\omega t$}; %подпишем ось, гречечсие буквы как команды \alpha
+	\draw[thin,->] (0,0) -- (0,2) node[left] {$U$} ; % ось y
+\end{circuitikz}
+
+\begin{circuitikz}
+        \draw[thin,->] (0,0) -- (7,0) node[below] {$\omega t$}; %подпишем ось, гречечсие буквы как команды \alpha
+        \draw[thin,->] (0,0) -- (0,2) node[left] {$U$} ; % ось y
+
+	\draw[domain=0:4]   % чертим в области \x от 0 до 4 
+	plot ( \x, 0.5*\x );   % \x - это переменная, 0.5*\x - это y(x), т.е. график в виде набора координат ( x, y)
+\end{circuitikz}
+
+
+\begin{circuitikz}
+        \draw[thin,->] (0,0) -- (7,0) node[below] {$\omega t$}; %подпишем ось, гречечсие буквы как команды \alpha
+        \draw[thin,->] (0,0) -- (0,2) node[left] {$U$} ; % ось y
+
+        \draw[domain=0:6]
+	plot ( \x, {sin(\x r)} );   % сложные математические выражения приходится заключать в фигурные скобки, r - аргумент в радианах (по-умолчанию в градусах) 
+\end{circuitikz}
+
+\end{document}
+
