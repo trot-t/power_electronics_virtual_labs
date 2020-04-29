@@ -1,0 +1,353 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}  % добавили русский
+\usepackage{tikz}                    % черчение графиков
+\usepackage{siunitx}                 % в электрических схемах номиналы элементов
+\usepackage[american,cuteinductors,smartlabels]{circuitikz} % черчение электрических схем
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, footskip=7mm]{geometry} % настройки полей документа
+\usepackage{cancel}
+
+%\title{Практическая работа 1} 
+%\author{Прокшин А.Н.}
+%\date{Апрель 2020}
+
+\begin{document}
+
+%\maketitle
+
+\section{Количество вентилей, участвующих в коммутации}
+
+\newcommand{\PI}{3.14159265}
+\newcommand{\Fi}{(30/180)*3.14159265} % угол между фазами K и K+1  54.08 градусов
+
+Фаза $k+1$ отстает от фазы $k$ на угол $\varphi=360^\circ/m$, где $m$-пульсность схемы.  Примем $\alpha=68^\circ$ и $\gamma=24^\circ$.
+
+\newcommand{\alfa}{(68/180)*3.1415}  % от оси отсчета отложим угол alpha, поскольку переменная \alpha уже есть, поменял имя переменной на \alfa 
+\newcommand{\gammaa}{(25/180)*3.14} % угол gamma
+
+
+\newcommand{\x}{1.83}
+
+\newcommand{\Fii}{\Fi} % угол между фазами K+1 и K+2  54.08 градусов
+
+%новая точка пересечения solve(sin(x-54.08/180*3.14159265) - sin(x-54.08/180*3.14159265-54.08/180*3.14159265),x);
+\newcommand{\xI}{1.83+(30/180)*3.14159265}
+
+\newcommand{\Fiii}{\Fi} % угол между фазами K+2 и K+3  54.08 градусов
+
+%новая точка пересечения solve(sin(x-54.08/180*3.14159265-54.08/180*3.14159265) - sin(x-54.08/180*3.14159265-54.08/180*3.14159265-54.08/180*3.14159265),x);
+\newcommand{\xII}{1.83+2*(30/180)*3.14159265}
+
+\begin{figure}[!ht]
+\centering
+\begin{circuitikz}
+        \draw[thin,->] (0,0) -- (13,0) node[below] {$\omega t$}; %подпишем ось, греческие буквы как команды \alpha
+        \draw[thin,->] (0,0) -- (0,2) node[left] {$U_{2\textcyrillic{ф}}$} ; % ось y
+
+        % фазы K и K+1
+        \draw[domain=0:12, samples=200, help lines, smooth]              % samples - количество точек для гладкости графика
+        plot ( \x, {sin(\x r)} ); % график 1 (фаза K)
+        \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi) r)} );  % график 2 (фаза K+1)
+
+        %полусумма фаз K и K+1
+        \draw[domain=\x:{\x+\PI}, samples=200, help lines, smooth, dashed]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {(sin(\x r) +sin((\x-\Fi) r))/2} );  % полусумма штриховой линией
+
+        % фаза K+2
+       \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi-\Fii) r)} );  % график 3 (фаза K+2)
+	% фаза K+3
+       \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi-\Fii-\Fiii) r)} );
+
+        % подписи к графикам
+        \draw ({\PI/2},{sin((\PI/2) r)}) node[rotate=90,right] {k} ({\PI/2+\Fi},{sin((\PI/2) r)}) node[rotate=90,right] {k+1} 
+	({\PI/2+\Fi+\Fii},{sin((\PI/2) r)}) node[rotate=90,right] {k+2}  ({\PI/2+\Fi+\Fii+\Fiii},{sin((\PI/2) r)}) node[rotate=90,right] {k+3};
+        %полусумма фаз K+1 и K+2
+        \draw[domain=\xI:{\xI+\PI}, thin, smooth, dotted]
+        plot (\x, {(sin((\x-\Fi) r) + sin((\x-\Fi-\Fii) r))/2} );
+
+
+        \draw[thin] ({\x}, -2 ) -- ({\x},{sin(\x r)}); % проводим линию оси отсчета углов
+        \draw[thin] ({\x + \alfa}, -2 ) -- ({\x + \alfa}, { (sin((\x+\alfa) r) +  sin((\x+\alfa - \Fi) r))/2 }); % линия для \alpha
+        \draw[thin] ({\x + \alfa + \gammaa}, -2 ) -- ({\x + \alfa + \gammaa }, { sin((\x+\alfa+\gammaa - \Fi) r) }); % линия для \alpha + \gamma
+%        \draw[thin] ({\x+\PI}, -2 ) -- ({\x+\PI},{sin((\x+\PI) r)}); %
+
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \x + \alpha  от графика фазы K  до полусуммы фаз K и K+1
+        \draw[ultra thick, red]
+        ({\x + \alfa}, { sin((\x+\alfa) r) }) -- ({\x + \alfa}, { (sin((\x+\alfa) r) +  sin((\x+\alfa - \Fi) r))/2 });  % x-координата соответствующая углу управления \x + \alpha
+        % жирной красной линией продолжим вдоль графика полусуммы от \alpha до \alpha + \gamma
+        \draw[domain=\x+\alfa:\x+\alfa+\gammaa, ultra thick, red] % от \alpha до \alpha + \gamma
+                plot ({\x}, { (sin((\x) r) +  sin((\x - \Fi) r))/2 }); % вдоль полусуммы фаз K и K+1
+        % вертикальная красная линия для x-координаты равной \x + \alpha + \gamma от графика полусуммы фаз K и K+1 до графика фазы K+1
+        \draw[ultra thick, red]
+        ({\x + \alfa + \gammaa}, { (sin((\x+\alfa+\gammaa) r) +  sin((\x+\alfa+\gammaa - \Fi) r))/2 }) --  ({\x + \alfa + \gammaa}, { sin((\x+\alfa+\gammaa - \Fi) r) });
+
+	% линии вниз
+ %       \draw[thin,dotted] ({\xI}, -2 ) -- ({\xI},{sin((\xI-\Fi) r)}); % проводим линию оси отсчета углов для фаз K+1 и K+2
+        \draw[thin,dotted] ({\xI + \alfa}, -2 ) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa-\Fi-\Fii) r))/2 }); % линия для \alpha отсчитываемого от пересечения K+1 и K+2
+        \draw[thin,dotted] ({\xI + \alfa + \gammaa}, -2 ) -- ({\xI + \alfa + \gammaa }, { sin((\xI+\alfa+\gammaa - \Fi - \Fii) r) }); % линия для \xI + \alpha + \gamma
+
+        \draw[domain={\x + \alfa + \gammaa}:{\xI+\alfa},ultra thick, red] % вдоль графика фазы K+1 от конца коммутации до угла управления для фазы K+1
+        plot(\x,{sin((\x-\Fi) r)});
+
+       % и далее повторяем то что было для фаз K и K+1
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \xI + \alpha  от графика фазы K+1  до полусуммы фаз K+1 и K+2
+        \draw[ultra thick, red]
+        ({\xI + \alfa}, { sin((\xI+\alfa-\Fi) r) }) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa-\Fi-\Fii) r))/2 }); % x-координата угла управления фазы K+1 \xI + \alpha
+        % жирной красной линией продолжим вдоль графика полусуммы фаз K+1 и K+2   от \xI+\alpha до \xI+\alpha + \gamma
+        \draw[domain=\xI+\alfa:\xI+\alfa+\gammaa, ultra thick, red] % от \xI+\alpha до \xI + \alpha + \gamma
+                plot ({\x}, { (sin((\x-\Fi) r) +  sin((\x-\Fi-\Fii) r))/2 }); % вдоль полусуммы фаз K+1 и K+2
+        % вертикальная красная линия для x-координаты равной \xI + \alpha + \gamma от графика полусуммы фаз K+1 и K+2 до графика фазы K+2
+        \draw[ultra thick, red]
+        ({\xI + \alfa + \gammaa}, { (sin((\xI+\alfa+\gammaa-\Fi) r) +  sin((\xI+\alfa+\gammaa-\Fi-\Fii) r))/2 }) --  ({\xI + \alfa + \gammaa}, { sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) });
+
+       % линии вниз
+  %      \draw[very thin,loosely dashed] ({\xII}, -2 ) -- ({\xII},{sin((\xI-\Fi-\Fii) r)}); % проводим линию оси отсчета углов для фаз K+2 и K+3
+  %      \draw[very thin,loosely dashed] ({\xII+\alfa},-2)--({\xII+\alfa},{(sin((\xII+\alfa-\Fi-\Fii) r)+sin((\xII+\alfa-\Fi-\Fii-\Fiii) r))/2 }); % линия для \alpha отсчитываемого от пересечения K+2 и K+3
+  %      \draw[very thin,loosely dashed] ({\xII+\alfa+\gammaa},-2)--({\xII+\alfa+\gammaa},{sin((\xII+\alfa+\gammaa-\Fi-\Fii-\Fiii) r)}); % линия для \xII + \alpha + \gamma
+
+	% и далее повторяем то что было для фаз K+1 и K+2
+	\draw[domain={\xI + \alfa + \gammaa}:{\xII+\alfa},ultra thick, red] % вдоль графика фазы K+2 от конца коммутации до угла управления для фазы K+2
+        plot(\x,{sin((\x-\Fi-\Fii) r)});
+	%вертикальная жирная красная линия  для x-координаты соответствующий углу управления \xII + \alpha  от графика фазы K+2  до полусуммы фаз K+2 и K+3
+        \draw[ultra thick, red]
+        ({\xII + \alfa},{sin((\xII+\alfa-\Fi-\Fii) r)})--({\xII+\alfa},{(sin((\xII+\alfa-\Fi-\Fii) r)+ sin((\xII+\alfa-\Fi-\Fii-\Fiii) r))/2});%x-координата угла управления фазы K+2 \xII+\alpha
+	% жирной красной линией продолжим вдоль графика полусуммы фаз K+2 и K+3   от \xII+\alpha до \xII+\alpha + \gamma
+        \draw[domain=\xII+\alfa:\xII+\alfa+\gammaa, ultra thick, red] % от \xII+\alpha до \xII + \alpha + \gamma
+	plot ({\x}, { (sin((\x-\Fi-\Fii) r) +  sin((\x-\Fi-\Fii-\Fiii) r))/2 }); % вдоль полусуммы фаз K+2 и K+3
+        % вертикальная красная линия для x-координаты равной \xII + \alpha + \gamma от графика полусуммы фаз K+2 и K+3 до графика фазы K+3
+        \draw[ultra thick, red]
+        ({\xII+\alfa+\gammaa},{(sin((\xII+\alfa+\gammaa-\Fi-\Fii) r)+sin((\xII+\alfa+\gammaa-\Fi-\Fii-\Fiii) r))/2})--({\xII+\alfa+\gammaa},{ sin((\xII+\alfa+\gammaa-\Fi-\Fii-\Fiii) r) });	
+\end{circuitikz}
+\caption{$m=12$, $\alpha=68^\circ$, $\gamma=25^\circ$}
+\label{answer}
+\end{figure}
+
+
+
+\renewcommand{\gammaa}{(28/180)*3.14}
+\begin{figure}[!ht]
+\centering
+\begin{circuitikz}
+        \draw[thin,->] (0,0) -- (13,0) node[below] {$\omega t$}; %подпишем ось, греческие буквы как команды \alpha
+        \draw[thin,->] (0,0) -- (0,2) node[left] {$U_{2\textcyrillic{ф}}$} ; % ось y
+
+        % фазы K и K+1
+        \draw[domain=0:12, samples=200, help lines, smooth]              % samples - количество точек для гладкости графика
+        plot ( \x, {sin(\x r)} ); % график 1 (фаза K)
+        \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi) r)} );  % график 2 (фаза K+1)
+
+        %полусумма фаз K и K+1
+        \draw[domain=\x:{\x+\PI}, samples=200, help lines, smooth, dashed]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {(sin(\x r) +sin((\x-\Fi) r))/2} );  % полусумма штриховой линией
+
+        % фаза K+2
+       \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi-\Fii) r)} );  % график 3 (фаза K+2)
+	% фаза K+3
+       \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi-\Fii-\Fiii) r)} );
+
+        % подписи к графикам
+        \draw ({\PI/2},{sin((\PI/2) r)}) node[rotate=90,right] {k} ({\PI/2+\Fi},{sin((\PI/2) r)}) node[rotate=90,right] {k+1} 
+	({\PI/2+\Fi+\Fii},{sin((\PI/2) r)}) node[rotate=90,right] {k+2}  ({\PI/2+\Fi+\Fii+\Fiii},{sin((\PI/2) r)}) node[rotate=90,right] {k+3};
+        %полусумма фаз K+1 и K+2
+        \draw[domain=\xI:{\xI+\PI}, thin, smooth, dotted]
+        plot (\x, {(sin((\x-\Fi) r) + sin((\x-\Fi-\Fii) r))/2} );
+
+
+        % сместим ось отсчета на следующую фазу
+        \draw[thin] ({\xI}, -1.7 ) -- ({\xI},{sin((\x-\Fi) r)}); % проводим линию оси отсчета углов
+
+        \draw[thin] ({\xI + \alfa}, -1.7 ) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa - \Fi-\Fii) r))/2 }); % линия для \alpha
+        \draw[thin] ({\xI + \alfa + \gammaa}, -1.7 ) -- ({\xI + \alfa + \gammaa }, { sin((\xI+\alfa+\gammaa - \Fi-\Fii) r) }); % линия для \alpha + \gamma
+        \draw[thin,<->] ({\xI}, -1.4) -- ({\xI + \alfa}, -1.4) node[midway,above] {$\alpha$};
+        \draw[thin,<->] ({\xI + \alfa}, -1.7 ) --  ({\xI + \alfa + \gammaa}, -1.7 ) node[midway,below] {\begin{minipage}{0.1\textwidth}\centering$\gamma$\\ток проходит через два вентиля фаз $k,k+1$\end{minipage}};
+
+        \draw[very thin] ({\xI + \alfa+\gammaa}, {sin((\xI+\alfa+\gammaa-\Fi-\Fii) r)} ) --  ({\xI + \alfa + \gammaa}, 2.3 );
+        \draw[very thin] ({\xII+\alfa}, {(sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) + sin((\xI+\alfa+\gammaa-\Fi-\Fii-\Fiii) r))/2 } ) --  ({\xII+\alfa}, 2.3 );
+        \draw[thin,->] ({\xI + \alfa + \gammaa -0.5}, 2.2) -- ({\xI + \alfa + \gammaa}, 2.2);
+        \draw[thin,<-] ({\xII + \alfa}, 2.2 )  -- ({\xII+\alfa+2.5}, 2.2) node[above] {\begin{minipage}{0.2\textwidth}ток проходит через один вентиль фазы $k+1$\end{minipage}};
+        
+        \draw[thin] ({\x+\PI}, -1.7 ) -- ({\x+\PI},{sin((\x+\PI) r)}); %
+
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \x + \alpha  от графика фазы K  до полусуммы фаз K и K+1
+        \draw[ultra thick, red]
+        ({\x + \alfa}, { sin((\x+\alfa) r) }) -- ({\x + \alfa}, { (sin((\x+\alfa) r) +  sin((\x+\alfa - \Fi) r))/2 });  % x-координата соответствующая углу управления \x + \alpha
+        % жирной красной линией продолжим вдоль графика полусуммы от \alpha до \alpha + \gamma
+        \draw[domain=\x+\alfa:\x+\alfa+\gammaa, ultra thick, red] % от \alpha до \alpha + \gamma
+                plot ({\x}, { (sin((\x) r) +  sin((\x - \Fi) r))/2 }); % вдоль полусуммы фаз K и K+1
+        % вертикальная красная линия для x-координаты равной \x + \alpha + \gamma от графика полусуммы фаз K и K+1 до графика фазы K+1
+        \draw[ultra thick, red]
+        ({\x + \alfa + \gammaa}, { (sin((\x+\alfa+\gammaa) r) +  sin((\x+\alfa+\gammaa - \Fi) r))/2 }) --  ({\x + \alfa + \gammaa}, { sin((\x+\alfa+\gammaa - \Fi) r) });
+
+	% линии вниз
+%        \draw[thin,dotted] ({\xI}, -2 ) -- ({\xI},{sin((\xI-\Fi) r)}); % проводим линию оси отсчета углов для фаз K+1 и K+2
+%        \draw[thin,dotted] ({\xI + \alfa}, -2 ) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa-\Fi-\Fii) r))/2 }); % линия для \alpha отсчитываемого от пересечения K+1 и K+2
+%        \draw[thin,dotted] ({\xI + \alfa + \gammaa}, -2 ) -- ({\xI + \alfa + \gammaa }, { sin((\xI+\alfa+\gammaa - \Fi - \Fii) r) }); % линия для \xI + \alpha + \gamma
+
+        \draw[domain={\x + \alfa + \gammaa}:{\xI+\alfa},ultra thick, red] % вдоль графика фазы K+1 от конца коммутации до угла управления для фазы K+1
+        plot(\x,{sin((\x-\Fi) r)});
+
+       % и далее повторяем то что было для фаз K и K+1
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \xI + \alpha  от графика фазы K+1  до полусуммы фаз K+1 и K+2
+        \draw[ultra thick, red]
+        ({\xI + \alfa}, { sin((\xI+\alfa-\Fi) r) }) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa-\Fi-\Fii) r))/2 }); % x-координата угла управления фазы K+1 \xI + \alpha
+        % жирной красной линией продолжим вдоль графика полусуммы фаз K+1 и K+2   от \xI+\alpha до \xI+\alpha + \gamma
+        \draw[domain=\xI+\alfa:\xI+\alfa+\gammaa, ultra thick, red] % от \xI+\alpha до \xI + \alpha + \gamma
+                plot ({\x}, { (sin((\x-\Fi) r) +  sin((\x-\Fi-\Fii) r))/2 }); % вдоль полусуммы фаз K+1 и K+2
+        % вертикальная красная линия для x-координаты равной \xI + \alpha + \gamma от графика полусуммы фаз K+1 и K+2 до графика фазы K+2
+        \draw[ultra thick, red]
+        ({\xI + \alfa + \gammaa}, { (sin((\xI+\alfa+\gammaa-\Fi) r) +  sin((\xI+\alfa+\gammaa-\Fi-\Fii) r))/2 }) --  ({\xI + \alfa + \gammaa}, { sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) });
+
+       % линии вниз
+%        \draw[very thin,loosely dashed] ({\xII}, -2 ) -- ({\xII},{sin((\xI-\Fi-\Fii) r)}); % проводим линию оси отсчета углов для фаз K+2 и K+3
+%        \draw[very thin,loosely dashed] ({\xII+\alfa},-2)--({\xII+\alfa},{(sin((\xII+\alfa-\Fi-\Fii) r)+sin((\xII+\alfa-\Fi-\Fii-\Fiii) r))/2 }); % линия для \alpha отсчитываемого от пересечения K+2 и K+3
+%        \draw[very thin,loosely dashed] ({\xII+\alfa+\gammaa},-2)--({\xII+\alfa+\gammaa},{sin((\xII+\alfa+\gammaa-\Fi-\Fii-\Fiii) r)}); % линия для \xII + \alpha + \gamma
+
+	% и далее повторяем то что было для фаз K+1 и K+2
+	\draw[domain={\xI + \alfa + \gammaa}:{\xII+\alfa},ultra thick, red] % вдоль графика фазы K+2 от конца коммутации до угла управления для фазы K+2
+        plot(\x,{sin((\x-\Fi-\Fii) r)});
+	%вертикальная жирная красная линия  для x-координаты соответствующий углу управления \xII + \alpha  от графика фазы K+2  до полусуммы фаз K+2 и K+3
+        \draw[ultra thick, red]
+        ({\xII + \alfa},{sin((\xII+\alfa-\Fi-\Fii) r)})--({\xII+\alfa},{(sin((\xII+\alfa-\Fi-\Fii) r)+ sin((\xII+\alfa-\Fi-\Fii-\Fiii) r))/2});%x-координата угла управления фазы K+2 \xII+\alpha
+	% жирной красной линией продолжим вдоль графика полусуммы фаз K+2 и K+3   от \xII+\alpha до \xII+\alpha + \gamma
+        \draw[domain=\xII+\alfa:\xII+\alfa+\gammaa, ultra thick, red] % от \xII+\alpha до \xII + \alpha + \gamma
+	plot ({\x}, { (sin((\x-\Fi-\Fii) r) +  sin((\x-\Fi-\Fii-\Fiii) r))/2 }); % вдоль полусуммы фаз K+2 и K+3
+        % вертикальная красная линия для x-координаты равной \xII + \alpha + \gamma от графика полусуммы фаз K+2 и K+3 до графика фазы K+3
+        \draw[ultra thick, red]
+        ({\xII+\alfa+\gammaa},{(sin((\xII+\alfa+\gammaa-\Fi-\Fii) r)+sin((\xII+\alfa+\gammaa-\Fi-\Fii-\Fiii) r))/2})--({\xII+\alfa+\gammaa},{ sin((\xII+\alfa+\gammaa-\Fi-\Fii-\Fiii) r) });	
+\end{circuitikz}
+\caption{$m=12$, $\alpha=68^\circ$ $\gamma=28.5^\circ$ }
+\label{answer1}
+\end{figure}
+
+
+На рис.\ref{answer} коммутация для $\gamma=25^\circ$ и на рис.\ref{answer1} коммутация для $\gamma=28.5^\circ$.
+ \textcolor{red}{ при дальнейшем увеличении $\gamma$ займет весь интервал $\frac{360^\circ}{m}$. }, т.е. практически весь интервал ток проходит через два вентиля.
+ при дальнейшем увеличении $\gamma$ коммутация затронет 3 фазы. И сам процесс будет выглядеть так: коммутация вентилей 2 фаз $\Rightarrow$ коммутация вентилей 3 фаз $\Rightarrow$ 2 фазы $\Rightarrow$ 3 фазы.
+
+ С дальнейшим увеличением угла $\gamma$ коммутация затронет 4 фазы: 3 фазы $\Rightarrow$ 4 фазы $\Rightarrow$ 3 фазы $\Rightarrow$ 4 фазы.
+
+ Для $m=12$ для угла $\gamma$ каждые $30^\circ$ происходит вовлечение в коммутацию следующего вентиля. Для неуправляемых вентилей $\alpha=0$. Возможно ли включение $m-1$ вентиля. Ответ -- нет,
+ \href{http://e-heritage.ru/ras/view/publication/general.html?id=48315927}{может гореть около половины вентилей}. 
+ 
+
+
+
+ \renewcommand{\gammaa}{(38.5/180)*3.14}
+\begin{figure}[!ht]
+\centering
+\begin{circuitikz}
+        \draw[thin,->] (0,0) -- (13,0) node[below] {$\omega t$}; %подпишем ось, греческие буквы как команды \alpha
+        \draw[thin,->] (0,0) -- (0,2) node[left] {$U_{2\textcyrillic{ф}}$} ; % ось y
+
+        % фазы K и K+1
+        \draw[domain=0:12, samples=200, help lines, smooth]              % samples - количество точек для гладкости графика
+        plot ( \x, {sin(\x r)} ); % график 1 (фаза K)
+        \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi) r)} );  % график 2 (фаза K+1)
+
+        %полусумма фаз K и K+1
+        \draw[domain=\x:{\x+\PI}, samples=200, help lines, smooth, dashed]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {(sin(\x r) +sin((\x-\Fi) r))/2} );  % полусумма штриховой линией
+
+        % фаза K+2
+       \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi-\Fii) r)} );  % график 3 (фаза K+2)
+	% фаза K+3
+       \draw[domain=0:12, samples=200, help lines, smooth]   % help lines, smooth - стиль линии, можно добавить расскраску - red
+        plot (\x, {sin((\x-\Fi-\Fii-\Fiii) r)} );
+
+        % подписи к графикам
+        \draw ({\PI/2},{sin((\PI/2) r)}) node[rotate=90,right] {k} ({\PI/2+\Fi},{sin((\PI/2) r)}) node[rotate=90,right] {k+1} 
+	({\PI/2+\Fi+\Fii},{sin((\PI/2) r)}) node[rotate=90,right] {k+2}  ({\PI/2+\Fi+\Fii+\Fiii},{sin((\PI/2) r)}) node[rotate=90,right] {k+3};
+        %полусумма фаз K+1 и K+2
+        \draw[domain=\xI:{\xI+\PI}, thin, smooth, dotted]
+        plot (\x, {(sin((\x-\Fi) r) + sin((\x-\Fi-\Fii) r))/2} );
+
+
+%        \draw[thin] ({\x}, -2 ) -- ({\x},{sin(\x r)}); % проводим линию оси отсчета углов
+
+%        \draw[thin] ({\x + \alfa}, -2 ) -- ({\x + \alfa}, { (sin((\x+\alfa) r) +  sin((\x+\alfa - \Fi) r))/2 }); % линия для \alpha
+%        \draw[thin] ({\x + \alfa + \gammaa}, -2 ) -- ({\x + \alfa + \gammaa }, { sin((\x+\alfa+\gammaa - \Fi) r) }); % линия для \alpha + \gamma
+%        \draw[thin] ({\x+\PI}, -2 ) -- ({\x+\PI},{sin((\x+\PI) r)}); %
+
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \x + 360/m  от графика полусуммы фаз K и K+1 до фазы K+2
+        \newcommand{\xx}{ (30/180)*3.14159265 }
+        \draw[ultra thick, red]
+        ({\x + \alfa + \xx}, { (sin((\x + \alfa +\xx) r) + sin((\x + \alfa + \xx - \Fi) r))/2 }) -- ({\x + \alfa + \xx}, {sin((\x + \alfa + \xx - \Fii) r)});
+
+        \draw[domain={\x+\alfa+\xx}:{\x+\alfa+\gammaa}, ultra thick, red]
+         plot(\x,{sin((\x-\Fi) r)});
+
+         % вертикальная красная линия для x-координаты, соответствующей окончанию коммутации 3х фаз (среднее из 3х фаз k, k+1, k+2 это фаза k+1)
+         % до среднего между фазами k+1, k+2
+         \draw[ultra thick, red]
+         ({\x+\alfa+\gammaa},{sin((\x+\alfa+\gammaa -\Fi) r)}) -- ({\x+\alfa+\gammaa}, {(sin((\x+\alfa+\gammaa-\Fi) r) + sin((\x+\alfa+\gammaa-\Fi-\Fii) r))/2});
+
+         % жирная красная линия по среднему k+1 и k+2, коммутация 2х фаз.
+         \draw[domain={\x+\alfa+\gammaa}:{\x+\alfa+\xx+\xx}, ultra thick, red]
+         plot(\x,{ (sin((\x-\Fi) r) + sin((\x-\Fi-\Fii) r))/2 } );
+
+         % и далее повторяем то что было
+
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \x + 360/m  от графика полусуммы фаз K и K+1 до фазы K+2
+         \draw[ultra thick, red]
+        ({\x + \alfa + \xx + \xx}, { (sin((\x + \alfa +\xx + \xx - \Fi) r) + sin((\x + \alfa + \xx +\xx - \Fi - \Fii) r))/2 }) -- ({\x + \alfa + \xx + \xx}, {sin((\x + \alfa + \xx + \xx - \Fi -\Fii) r)});
+
+        \draw[domain={\x+\alfa+\xx}:{\x+\alfa+\gammaa}, ultra thick, red]
+        plot(\x,{sin((\x-\Fi) r)});
+
+        \draw[domain={\xII+\alfa}:{\xI + \alfa + \gammaa}, ultra thick, red] % вдоль графика фазы K+2 от конца коммутации до угла управления для фазы K+2
+        plot(\x,{sin((\x-\Fi-\Fii) r)});
+
+        % вертикальная красная линия для x-координаты равной \xI + \alpha + \gamma от графика K+2 до полусуммы фаз K+2 и K+3
+        \draw[ultra thick, red]
+        ({\xI + \alfa + \gammaa}, { sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) }) -- ({\xI + \alfa + \gammaa}, { (sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) +  sin((\xI+\alfa+\gammaa-\Fi-\Fii-\Fiii) r))/2 });
+        %--  ({\xI + \alfa + \gammaa}, { sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) });
+
+         % жирная красная линия по среднему k+1 и k+2, коммутация 2х фаз.
+         \draw[domain={\xI+\alfa+\gammaa}:{\xI+\alfa+\xx+\xx}, ultra thick, red]
+         plot(\x,{ (sin((\x-\Fi-\Fii) r) + sin((\x-\Fi-\Fii-\Fiii) r))/2 } );
+
+        %вертикальная жирная красная линия  для x-координаты соответствующий углу управления \x + 360/m  от графика полусуммы фаз K+1 и K+2 до фазы K+3
+         \draw[ultra thick, red]
+        ({\xI + \alfa + \xx + \xx}, { (sin((\xI + \alfa +\xx + \xx - \Fi-\Fii) r) + sin((\xI + \alfa + \xx +\xx - \Fi - \Fii -\Fiii) r))/2 }) -- ({\xI + \alfa + \xx + \xx}, {sin((\xI + \alfa + \xx + \xx - \Fi -\Fii -\Fiii) r)}); 
+
+         % сместим ось отсчета на следующую фазу
+        \draw[thin] ({\xI}, -1.7 ) -- ({\xI},{sin((\x-\Fi) r)}); % проводим линию оси отсчета углов
+
+        \draw[thin] ({\xI + \alfa}, -1.7 ) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa - \Fi-\Fii) r))/2 }); % линия для \alpha
+        \draw[thin] ({\xI + \alfa + \gammaa}, -1.7 ) -- ({\xI + \alfa + \gammaa }, { sin((\xI+\alfa+\gammaa - \Fi-\Fii) r) }); % линия для \alpha + \gamma
+        \draw[thin,<->] ({\xI}, -1.4) -- ({\xI + \alfa}, -1.4) node[midway,above] {$\alpha$};
+        \draw[thin,<->] ({\xI + \alfa}, -1.7 ) --  ({\xI + \alfa + \gammaa}, -1.7 ) node[midway,below] {\begin{minipage}{0.1\textwidth}\centering$\gamma$\\ток проходит через два вентиля фаз $k,k+1$\end{minipage}};
+
+        \draw[very thin] ({\xI + \alfa+\gammaa}, {sin((\xI+\alfa+\gammaa-\Fi-\Fii) r)} ) --  ({\xI + \alfa + \gammaa}, 2.3 );
+        \draw[very thin] ({\xII+\alfa}, {(sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) + sin((\xI+\alfa+\gammaa-\Fi-\Fii-\Fiii) r))/2 } ) --  ({\xII+\alfa}, 2.3 );
+        \draw[thin,->] ({\xI + \alfa + \gammaa -0.5}, 2.2) -- ({\xII + \alfa}, 2.2);
+%        \draw[thin,<-] ({\xII + \alfa}, 2.2 )  -- ({\xII+\alfa+2.5}, 2.2) node[above] {\begin{minipage}{0.2\textwidth}ток проходит через один вентиль фазы $k+1$\end{minipage}};
+        \draw[thin,<-] ({\xI + \alfa + \gammaa}, 2.2 )  -- ({\xII+\alfa+2.5}, 2.2) node[above] {\begin{minipage}{0.18\textwidth}ток проходит через три вентиля фаз $k+1$, $k+2$ и $k+3$\end{minipage}};
+        
+        \draw[thin] ({\x+\PI}, -1.7 ) -- ({\x+\PI},{sin((\x+\PI) r)}); %
+        
+
+\end{circuitikz}
+\caption{$m=12$, $\alpha=68^\circ$, $\gamma=38.5^\circ$ }
+\label{answer1}
+\end{figure}
+
+\renewcommand{\bibname}{}
+\begin{thebibliography}{3} 
+	\bibitem{lm211} \href{http://books.e-heritage.ru/book/10078915}{Электромагнитные процессы в системах с мощными выпрямительными установками
+Костенко М. П., Нейман Л. Р., Блавдзевич Г. Н. М.;Л.Изд-во АН СССР. 1946. 110 c.}
+\end{thebibliography}
+
+
+\end{document}
+
