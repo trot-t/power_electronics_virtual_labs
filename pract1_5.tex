@@ -234,7 +234,7 @@
 
  С дальнейшим увеличением угла $\gamma$ коммутация затронет 4 фазы: 3 фазы $\Rightarrow$ 4 фазы $\Rightarrow$ 3 фазы $\Rightarrow$ 4 фазы.
 
- Для $m=12$ для угла $\gamma$ каждые $30^\circ$ происходит вовлечение в коммутацию следующего вентиля. Для неуправляемых вентилей $\alpha=0$. Возможно ли включение $m-1$ вентиля? Ответ -- нет,
+ Для $m=12$ для угла $\gamma$ каждые $30^\circ$ происходит вовлечение в коммутацию следующего вентиля. Для неуправляемых вентилей $\alpha=0$. Возможно ли одновременное включение $m-1$ вентиля? Ответ -- нет,
  \href{http://e-heritage.ru/ras/view/publication/general.html?id=48315927}{может гореть около половины вентилей} \cite{KNB}. 
  
 
@@ -321,12 +321,16 @@
         ({\xI + \alfa + \xx + \xx}, { (sin((\xI + \alfa +\xx + \xx - \Fi-\Fii) r) + sin((\xI + \alfa + \xx +\xx - \Fi - \Fii -\Fiii) r))/2 }) -- ({\xI + \alfa + \xx + \xx}, {sin((\xI + \alfa + \xx + \xx - \Fi -\Fii -\Fiii) r)}); 
 
          % сместим ось отсчета на следующую фазу
-        \draw[thin] ({\xI}, -1.7 ) -- ({\xI},{sin((\x-\Fi) r)}); % проводим линию оси отсчета углов
+        \draw[thin] ({\xI}, -1.4 ) -- ({\xI},{sin((\x-\Fi) r)}); % проводим линию оси отсчета углов
 
-        \draw[thin] ({\xI + \alfa}, -1.7 ) -- ({\xI + \alfa}, { (sin((\xI+\alfa-\Fi) r) +  sin((\xI+\alfa - \Fi-\Fii) r))/2 }); % линия для \alpha
-        \draw[thin] ({\xI + \alfa + \gammaa}, -1.7 ) -- ({\xI + \alfa + \gammaa }, { sin((\xI+\alfa+\gammaa - \Fi-\Fii) r) }); % линия для \alpha + \gamma
-        \draw[thin,<->] ({\xI}, -1.4) -- ({\xI + \alfa}, -1.4) node[midway,above] {$\alpha$};
-        \draw[thin,<->] ({\xI + \alfa}, -1.7 ) --  ({\xI + \alfa + \gammaa}, -1.7 ) node[midway,below] {\begin{minipage}{0.1\textwidth}\centering$\gamma$\\ток проходит через два вентиля фаз $k,k+1$\end{minipage}};
+        \draw[thin] ({\xI + \alfa}, -1.4 ) -- ({\xI + \alfa}, { (sin((\xI+\alfa) r) +  sin((\xI+\alfa - \Fi) r))/2 }); % линия для \alpha
+        \draw[thin] ({\xI + \alfa + \gammaa}, -1.4 ) -- ({\xI + \alfa + \gammaa }, { sin((\xI+\alfa+\gammaa - \Fi-\Fii) r) }); % линия для \alpha + \gamma
+        \draw[very thin] ({\x+\alfa+\gammaa},-2) -- ({\x+\alfa+\gammaa}, {sin((\x+\alfa+\gammaa-\Fi) r)});
+        \draw[very thin] ({\xII + \alfa},-2) -- ({\xII + \alfa}, {(sin((\xII + \alfa - \Fi) r) + sin((\xII + \alfa - \Fi - \Fii) r))/2});
+        \draw[very thin,<->] ({\x+\alfa+\gammaa},-1.9) -- ({\xII+\alfa},-1.9) node[midway, below] {\begin{minipage}{0.2\textwidth}ток проходит через два вентиля фаз $k+1$, $k+2$\end{minipage}};
+        
+%        \draw[thin,<->] ({\xI}, -1.4) -- ({\xI + \alfa}, -1.4) node[midway,above] {$\alpha$};
+        \draw[thin,<->] ({\xI + \alfa}, -1.3 ) --  ({\xI + \alfa + \gammaa}, -1.3 ) node[midway,above] {$\gamma$};
 
         \draw[very thin] ({\xI + \alfa+\gammaa}, {sin((\xI+\alfa+\gammaa-\Fi-\Fii) r)} ) --  ({\xI + \alfa + \gammaa}, 2.3 );
         \draw[very thin] ({\xII+\alfa}, {(sin((\xI+\alfa+\gammaa-\Fi-\Fii) r) + sin((\xI+\alfa+\gammaa-\Fi-\Fii-\Fiii) r))/2 } ) --  ({\xII+\alfa}, 2.3 );
