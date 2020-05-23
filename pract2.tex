@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{tikz}
+\usepackage[european,cuteinductors,smartlabels]{circuitikz}
+\title{Практическая работа №2}
+%\author{студент:    группы    }
+% Конец преамбулы
+\begin{document}
+\maketitle
+
+\begin{figure}[!ht]
+\begin{tabular}{cccc}
+\begin{minipage}{0.25\textwidth}
+	\includegraphics[scale=0.3]{schema1}
+	\caption{\small Лучевая схема: треугольник -- звезда}
+\end{minipage}
+	&
+\begin{minipage}{0.25\textwidth}
+        \includegraphics[scale=0.3]{schema2}
+	\caption{\small Лучевая схема: звезда -- звезда}
+\end{minipage}
+        &
+\begin{minipage}{0.3\textwidth}
+        \includegraphics[scale=0.3]{schema3}
+	\caption{\small Мостовая схема (Ларионова): треугольник -- звезда}
+\end{minipage}
+        &
+\begin{minipage}{0.25\textwidth}
+        \includegraphics[scale=0.3]{schema4}
+	\caption{\small Мостовая схема (Ларионова): звезда -- звезда}
+\end{minipage}
+       \\
+\begin{minipage}{0.25\textwidth}
+        \includegraphics[scale=0.3]{schema5}
+	\caption{\small последовательная схема (Вологдина): треугольник -- две звезды}
+\end{minipage}
+        &
+\begin{minipage}{0.25\textwidth}
+        \includegraphics[scale=0.3]{schema6}
+	\caption{\small последовательная схема (Вологдина): звезда -- две звезды}
+\end{minipage}
+        &
+\begin{minipage}{0.25\textwidth}
+        \includegraphics[scale=0.3]{schema7}
+	\caption{\small Мостовая схема: треугольник -- треугольник}
+\end{minipage}
+        &
+\begin{minipage}{0.25\textwidth}
+        \includegraphics[scale=0.3]{schema8}
+	\caption{\small Мостовая схема: звезда -- треугольник}
+\end{minipage}
+       \\
+\begin{minipage}{0.3\textwidth}
+        \includegraphics[scale=0.3]{schema9}
+	 \caption{\small Параллельная схема (Кюблера): треугольник -- две звезды}
+\end{minipage}
+        &
+\begin{minipage}{0.3\textwidth}
+        \includegraphics[scale=0.3]{schema10}
+	\caption{\small Параллельная схема (Кюблера): звезда -- две звезды}
+\end{minipage}
+        &
+\begin{minipage}{0.3\textwidth}
+        \includegraphics[scale=0.3]{schema11}
+	\caption{\small Лучевая схема: треугольник -- двойной зигзаг}
+\end{minipage}
+        &
+\begin{minipage}{0.3\textwidth}
+        \includegraphics[scale=0.3]{schema12}
+	\caption{\small Лучевая схема: звезда -- двойной зигзаг}
+\end{minipage}
+       \\
+\end{tabular}
+\end{figure}
+
+
+\section*{Задание}
+\begin{itemize}
+	\item Изобразить схему согласно варианта на рис 1-12 (схема должны быть редактируемой в Компасе или Latex, элементы схемы в векторном виде -- при изменении размера изображение не должно деградировать);
+	\item изобразить вектора фаз первичной обмотки трансформатора, вторичной обмотки трансформатора для выбранного момента времени;
+	\item построить график выпрямленного напряжения для одного периодa.
+
+\end{itemize}
+
+
+%Пример графика:
+
+%\begin{figure}[ht!]
+%\centering
+%\begin{tikzpicture}[scale=0.67]
+%\newcommand{\xb}{-3} % введем переменную \xb равную -3
+%\newcommand{\xa}{3}
+%\draw[thin, ->] (-6,0) -- (6,0) node[right] {$X$}; % чертим ось x
+%\draw[thin, ->] (0,-1.5) -- (0,1.5) node[left] {$Y$};  % чертим ось y
+% % подписи под точками на оси
+%\foreach \x\xtext in {-5/-5,5/5,{\xb}/\xb,{\xa}/{\gamma}} %
+%   \draw (\x,0.1) -- (\x,-0.1) node[below] {$\xtext$};
+% % строим график
+% \draw[domain=-5:0, help lines, smooth] % график для интервала -5:0
+%        plot ({\x},{sin(\x*180/3.14)}); % фунция sin имеет аргумент в градусах
+% \draw[domain=0:5, help lines, smooth]  % график для интервала 0:5
+%        plot ({\x},{cos(\x*180/3.14)});
+%\end{tikzpicture}
+%	\caption{Пример вычерчивания графика}
+%\end{figure}
+\end{document}
