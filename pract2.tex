@@ -1,4 +1,36 @@
+\providecommand{\pdfxopts}{a-1b,cyrxmp}
+\providecommand{\thisyear}{2020}
+\immediate\write18{rm \jobname.xmpdata}%  uncomment for Unix-based systems
+\begin{filecontents*}{\jobname.xmpdata}
+\Title{Силовая электроника. Практическая работа №2\textemdash\thisyear}
+\Author{Артем Николаевич Прокшин}
+\Creator{pdfTeX + pdfx.sty with options \pdfxopts }
+\Subject{Практическая работа №2
+\sep
+        Варианты построения силовых схем преобразователей
+\sep
+	питаемых от 3-фазной сети}
+\Keywords{силовые преобразователи, варианты силовых схем преобразователей, ЛЭТИ}
+\CoverDisplayDate{май \thisyear}
+\CoverDate{2020-05-23}
+\Copyrighted{True}
+\Copyright{Public Domain}
+\CopyrightURL{http://github.com/trot-t}
+\Creator{pdfTeX + pdfx.sty with options \pdfxopts }
+\end{filecontents*}
+
 \documentclass{article}
+
+\pdfcompresslevel=9
+
+\usepackage[\pdfxopts]{pdfx}[2016/03/09]
+\PassOptionsToPackage{obeyspaces}{url}
+\let\tldocrussian=1  % for live4ht.cfg
+
+
+%\usepackage{extsizes}
+\usepackage[left=15mm, top=20mm, right=15mm, bottom=20mm, nohead, footskip=7mm]{geometry} % настройки полей документа
+
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
@@ -10,34 +42,35 @@
 \begin{document}
 \maketitle
 
+\section*{Варианты построения силовых схем преобразователей, преобразователей, питаемых от 3-фазной сети, с разным эквивалентным числом фаз}
 \begin{figure}[!ht]
 \begin{tabular}{cccc}
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.22\textwidth}
 	\includegraphics[scale=0.3]{schema1}
 	\caption{\small Лучевая схема: треугольник -- звезда}
 \end{minipage}
 	&
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema2}
 	\caption{\small Лучевая схема: звезда -- звезда}
 \end{minipage}
         &
-\begin{minipage}{0.3\textwidth}
+\begin{minipage}{0.25\textwidth}
         \includegraphics[scale=0.3]{schema3}
 	\caption{\small Мостовая схема (Ларионова): треугольник -- звезда}
 \end{minipage}
         &
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema4}
 	\caption{\small Мостовая схема (Ларионова): звезда -- звезда}
 \end{minipage}
        \\
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema5}
 	\caption{\small последовательная схема (Вологдина): треугольник -- две звезды}
 \end{minipage}
         &
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema6}
 	\caption{\small последовательная схема (Вологдина): звезда -- две звезды}
 \end{minipage}
@@ -47,27 +80,27 @@
 	\caption{\small Мостовая схема: треугольник -- треугольник}
 \end{minipage}
         &
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema8}
 	\caption{\small Мостовая схема: звезда -- треугольник}
 \end{minipage}
        \\
-\begin{minipage}{0.3\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema9}
 	 \caption{\small Параллельная схема (Кюблера): треугольник -- две звезды}
 \end{minipage}
         &
-\begin{minipage}{0.3\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema10}
 	\caption{\small Параллельная схема (Кюблера): звезда -- две звезды}
 \end{minipage}
         &
-\begin{minipage}{0.3\textwidth}
+\begin{minipage}{0.25\textwidth}
         \includegraphics[scale=0.3]{schema11}
 	\caption{\small Лучевая схема: треугольник -- двойной зигзаг}
 \end{minipage}
         &
-\begin{minipage}{0.3\textwidth}
+\begin{minipage}{0.22\textwidth}
         \includegraphics[scale=0.3]{schema12}
 	\caption{\small Лучевая схема: звезда -- двойной зигзаг}
 \end{minipage}
@@ -78,11 +111,13 @@
 
 \section*{Задание}
 \begin{itemize}
-	\item Изобразить схему согласно варианта на рис 1-12 (схема должны быть редактируемой в Компасе или Latex, элементы схемы в векторном виде -- при изменении размера изображение не должно деградировать);
+	\item Изобразить схему согласно варианта на рис 1-12 (схема должны быть редактируемой в Компасе или \LaTeX \cite{circuitikz}, элементы схемы в векторном виде -- при изменении размера изображение не должно деградировать);
 	\item изобразить вектора фаз первичной обмотки трансформатора, вторичной обмотки трансформатора для выбранного момента времени;
 	\item построить график выпрямленного напряжения для одного периодa.
 
 \end{itemize}
+
+
 
 
 %Пример графика:
@@ -105,4 +140,11 @@
 %\end{tikzpicture}
 %	\caption{Пример вычерчивания графика}
 %\end{figure}
+
+\renewcommand{\bibname}{}
+\begin{thebibliography}{2}
+	\bibitem{bulgakovAA} Булгаков, А.А. Новая теория управляемых выпрямителей, Москва, Наука, 1970. -- 320с.
+        \bibitem{circuitikz} \href{http://texdoc.net/texmf-dist/doc/latex/circuitikz/circuitikzmanual.pdf}{Описание пакета \LaTeX для черчения электрических схем для статей и публикаций}
+\end{thebibliography}
+
 \end{document}
