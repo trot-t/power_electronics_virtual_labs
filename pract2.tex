@@ -119,6 +119,66 @@
 
 
 
+\section*{Примеры}
+
+\textcolor{red}{последний символ команды должен быть точка с запятой ;}
+
+
+
+\begin{verbatim}
+\begin{circuitikz}
+\ctikzset{bipoles/americaninductor/coils=3} % для красоты используем 3 витка
+\draw (0,0) to[american inductor,o-] (3,0); % o- это контакт
+\end{circuitikz}
+\end{verbatim}
+
+\begin{circuitikz}
+\ctikzset{bipoles/americaninductor/coils=3} 
+\draw (0,0) to[american inductor,o-] (3,0); 
+\end{circuitikz}
+
+
+\begin{verbatim}
+\draw (0,0) node[above]{+} to[american inductor,o-] (3,0); % плюс над контактом в точке (0,0)
+\end{verbatim}
+
+\begin{circuitikz}
+\ctikzset{bipoles/americaninductor/coils=3}
+\draw (0,0) node[above] {+} to[american inductor,o-] (3,0); % плюс над контактом  в точке (0,0)
+\end{circuitikz}
+
+позицию символа относительно точки можно обозначить как [below right] и т.п. \cite{circuitikz}
+
+\begin{verbatim}
+\begin{circuitikz}
+\draw (0,0) to[D] (3,0) node[right] {диод}; 
+\draw (0,-1) to[D-] (3,-1) node[right] {диод по ГОСТу};
+\draw (0,-2) to[D*] (3,-2) node[right] {закрашенный диод};
+\end{circuitikz}
+\end{verbatim}
+
+\begin{circuitikz}
+\draw (0,0) to[D] (3,0) node[right] {диод}; 
+\draw (0,-1) to[D-] (3,-1) node[right] {диод по ГОСТу};
+\draw (0,-2) to[D*] (3,-2) node[right] {закрашенный диод};
+\end{circuitikz}
+
+
+Если размер диодов хотим уменьшить
+
+\begin{verbatim}
+\begin{circuitikz}
+\ctikzset{bipoles/diode/width=0.2,bipoles/diode/height=0.2}
+\draw (0,-1) to[D*] (3,-1) node[right] {}; %справа объявили узел(node) ничего не написав {}
+\end{circuitikz}
+\end{verbatim}
+
+\begin{circuitikz}
+\ctikzset{bipoles/diode/width=0.2,bipoles/diode/height=0.2}
+\draw (0,-1) to[D*] (3,-1) node[right] {};
+\end{circuitikz}
+
+
 
 %Пример графика:
 
