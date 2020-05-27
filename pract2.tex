@@ -182,24 +182,24 @@
 
 %Пример графика:
 
-%\begin{figure}[ht!]
-%\centering
-%\begin{tikzpicture}[scale=0.67]
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[scale=0.67]
 %\newcommand{\xb}{-3} % введем переменную \xb равную -3
 %\newcommand{\xa}{3}
-%\draw[thin, ->] (-6,0) -- (6,0) node[right] {$X$}; % чертим ось x
-%\draw[thin, ->] (0,-1.5) -- (0,1.5) node[left] {$Y$};  % чертим ось y
+\draw[thin, ->] (-6,0) -- (6,0) node[right] {$\omega t$}; % чертим ось x
+\draw[thin, ->] (0,-1.5) -- (0,1.5) node[left] {$U$};  % чертим ось y
 % % подписи под точками на оси
 %\foreach \x\xtext in {-5/-5,5/5,{\xb}/\xb,{\xa}/{\gamma}} %
 %   \draw (\x,0.1) -- (\x,-0.1) node[below] {$\xtext$};
 % % строим график
-% \draw[domain=-5:0, help lines, smooth] % график для интервала -5:0
-%        plot ({\x},{sin(\x*180/3.14)}); % фунция sin имеет аргумент в градусах
-% \draw[domain=0:5, help lines, smooth]  % график для интервала 0:5
-%        plot ({\x},{cos(\x*180/3.14)});
-%\end{tikzpicture}
-%	\caption{Пример вычерчивания графика}
-%\end{figure}
+ \draw[domain=-5:0, help lines, smooth] % график для интервала -5:0
+        plot ({\x},{sin(\x*180/3.14)}); % фунция sin имеет аргумент в градусах
+ \draw[domain=0:5, help lines, smooth]  % график для интервала 0:5
+        plot ({\x},{cos(\x*180/3.14)});
+\end{tikzpicture}
+	\caption{Пример вычерчивания графика}
+\end{figure}
 
 \renewcommand{\bibname}{}
 \begin{thebibliography}{2}
