@@ -124,7 +124,7 @@
 Редактирование можно выполнить \href{overleaf.com}{онлайн}.
 Зарегистрироваться и создать новый проект.
 
-\textcolor{red}{последний символ команды должен быть точка с запятой ;}
+
 
 Внутри тегов $\backslash begin\{document\}$ и $\backslash end\{document\}$ вставляем: 
 
@@ -135,11 +135,13 @@
 \end{circuitikz}
 \end{verbatim}
 
+
 \begin{circuitikz}
 \ctikzset{bipoles/americaninductor/coils=3} 
 \draw (0,0) to[american inductor,o-] (3,0); 
 \end{circuitikz}
 
+\textcolor{red}{последний символ команды должен быть точка с запятой ;}
 
 \begin{verbatim}
 \draw (0,0) node[above]{+} to[american inductor,o-*] (3,0); % плюс над точкой (0,0); -* соединение
