@@ -121,9 +121,12 @@
 
 \section*{Примеры}
 
+Редактирование можно выполнить \href{overleaf.com}{онлайн}.
+Зарегистрироваться и создать новый проект.
+
 \textcolor{red}{последний символ команды должен быть точка с запятой ;}
 
-
+Внутри тегов $\backslash begin\{document\}$ и $\backslash end\{document\}$ вставляем: 
 
 \begin{verbatim}
 \begin{circuitikz}
@@ -139,12 +142,14 @@
 
 
 \begin{verbatim}
-\draw (0,0) node[above]{+} to[american inductor,o-] (3,0); % плюс над контактом в точке (0,0)
+\draw (0,0) node[above]{+} to[american inductor,o-*] (3,0); % плюс над точкой (0,0); -* соединение
+\draw[fill] (1.85, 0.4) circle (1.5pt); % точка возле катушки
 \end{verbatim}
 
 \begin{circuitikz}
 \ctikzset{bipoles/americaninductor/coils=3}
-\draw (0,0) node[above] {+} to[american inductor,o-] (3,0); % плюс над контактом  в точке (0,0)
+\draw (0,0) node[above] {+} to[american inductor,o-*] (3,0); % плюс над контактом  в точке (0,0)
+\draw[fill] (1.85, 0.4) circle (1.5pt);
 \end{circuitikz}
 
 позицию символа относительно точки можно обозначить как [below right] и т.п. \cite{circuitikz}
@@ -169,18 +174,20 @@
 \begin{verbatim}
 \begin{circuitikz}
 \ctikzset{bipoles/diode/width=0.2,bipoles/diode/height=0.2}
-\draw (0,-1) to[D*] (3,-1) node[right] {}; %справа объявили узел(node) ничего не написав {}
+\draw (0,0) to[D*] (3,0) node[right] {}; %справа объявили узел(node) ничего не написав {}
+\draw (0,-1) to[D*] (3,-1); % если метка не нужна, то node {} не нужна
 \end{circuitikz}
 \end{verbatim}
 
 \begin{circuitikz}
 \ctikzset{bipoles/diode/width=0.2,bipoles/diode/height=0.2}
-\draw (0,-1) to[D*] (3,-1) node[right] {};
+\draw (0,0) to[D*] (3,0) node[right] {}; 
+\draw (0,-1) to[D*] (3,-1);
 \end{circuitikz}
 
 
 
-%Пример графика:
+\subsection*{Пример графика:}
 
 \begin{verbatim}
 \begin{tikzpicture}[scale=0.67]
