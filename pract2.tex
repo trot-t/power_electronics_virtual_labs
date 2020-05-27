@@ -182,6 +182,17 @@
 
 %Пример графика:
 
+\begin{verbatim}
+\begin{tikzpicture}[scale=0.67]
+\draw[thin, ->] (-6,0) -- (6,0) node[right] {$\omega t$}; % чертим ось x
+\draw[thin, ->] (0,-1.5) -- (0,1.5) node[left] {$U$};  % чертим ось y
+ \draw[domain=-5:0, help lines, smooth] % график для интервала -5:0
+        plot ({\x},{sin(\x*180/3.14)}); % фунция sin имеет аргумент в градусах
+ \draw[domain=0:5, help lines, smooth]  % график для интервала 0:5
+        plot ({\x},{cos(\x*180/3.14)});
+\end{tikzpicture}
+\end{verbatim}
+
 \begin{figure}[ht!]
 \centering
 \begin{tikzpicture}[scale=0.67]
