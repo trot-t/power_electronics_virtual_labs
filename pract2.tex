@@ -131,17 +131,17 @@
 \begin{verbatim}
 \begin{circuitikz}
 \ctikzset{bipoles/americaninductor/coils=3} % для красоты используем 3 витка
-\draw (0,0) to[american inductor,o-] (3,0); % o- это контакт
+\draw (0,0) to[american inductor,o-*] (3,0); % o- это контакт; -* это соединение
 \end{circuitikz}
 \end{verbatim}
 
 
 \begin{circuitikz}
 \ctikzset{bipoles/americaninductor/coils=3} 
-\draw (0,0) to[american inductor,o-] (3,0); 
+\draw (0,0) to[american inductor,o-*] (3,0); 
 \end{circuitikz}
 
-\textcolor{red}{последний символ команды должен быть точка с запятой ;}
+\textcolor{red}{последний символ команды $\backslash draw$ должен быть точка с запятой ;}
 
 \begin{verbatim}
 \draw (0,0) node[above]{+} to[american inductor,o-*] (3,0); % плюс над точкой (0,0); -* соединение
@@ -150,11 +150,13 @@
 
 \begin{circuitikz}
 \ctikzset{bipoles/americaninductor/coils=3}
-\draw (0,0) node[above] {+} to[american inductor,o-*] (3,0); % плюс над контактом  в точке (0,0)
-\draw[fill] (1.85, 0.4) circle (1.5pt);
+\draw (0,0) node[above] {+} to[american inductor] (3,0); % плюс над контактом  в точке (0,0)
+\draw[fill] (2.25, 0.15) circle (1.5pt);
 \end{circuitikz}
 
-позицию символа относительно точки можно обозначить как [below right] и т.п. \cite{circuitikz}
+Для указания начало обмотки используют точку \cite{UGOinductor}.
+
+Позицию символа относительно точки (x,y) можно задать как (x,y) node[below right] \{символ\} и т.п. \cite{circuitikz}
 
 \begin{verbatim}
 \begin{circuitikz}
@@ -220,7 +222,10 @@
 \end{figure}
 
 \renewcommand{\bibname}{}
-\begin{thebibliography}{2}
+\begin{thebibliography}{5}
+	\bibitem{trans}	\href{http://docs.cntd.ru/document/gost-16772-77}{ГОСТ 16772-77} Трансформаторы и реакторы преобразовательные. Общие технические условия
+	\bibitem{UGOdiod} \href{https://znaytovar.ru/gost/2/GOST_273073_ESKD_Oboznacheniya.html}{ГОСТ 2.730-73}  Единая система конструкторской документации. Обозначения условные графические в схемах.  Приборы полупроводниковые
+	\bibitem{UGOinductor} \href{http://docs.cntd.ru/document/1200006612} {ГОСТ 2.723-68}Единая система конструкторской документации (ЕСКД). Обозначения условные графические в схемах. Катушки индуктивности, дроссели, трансформаторы, автотрансформаторы и магнитные усилители (с Изменениями N 1, 2, 3)   
 	\bibitem{bulgakovAA} Булгаков, А.А. Новая теория управляемых выпрямителей, Москва, Наука, 1970. -- 320с.
         \bibitem{circuitikz} \href{http://texdoc.net/texmf-dist/doc/latex/circuitikz/circuitikzmanual.pdf}{Описание пакета \LaTeX для черчения электрических схем для статей и публикаций}
 \end{thebibliography}
