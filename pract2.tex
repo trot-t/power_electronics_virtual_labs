@@ -159,14 +159,13 @@
 \begin{verbatim}
 \begin{circuitikz}
 \draw (0,-1) to[D-] (3,-1) node[right] {диод по ГОСТу};
-\draw (0,-2) to[D*] (3,-2) node[right] {закрашенный диод};
 \end{circuitikz}
 \end{verbatim}
 
 \begin{circuitikz}
 %\draw (0,0) to[D] (3,0) node[right] {диод}; это не нужно использовать
 \draw (0,-1) to[D-] (3,-1) node[right] {диод по ГОСТу};
-\draw (0,-2) to[D*] (3,-2) node[right] {закрашенный диод};
+%\draw (0,-2) to[D*] (3,-2) node[right] {закрашенный диод}; это не нужно использовать
 \end{circuitikz}
 
 
@@ -175,15 +174,15 @@
 \begin{verbatim}
 \begin{circuitikz}
 \ctikzset{bipoles/diode/width=0.2,bipoles/diode/height=0.2}
-\draw (0,0) to[D*] (3,0) node[right] {}; %справа объявили узел(node) ничего не написав {}
-\draw (0,-1) to[D*] (3,-1); % если метка не нужна, то node {} не нужна
+\draw (0,0) to[D-] (3,0) node[right] {}; %справа объявили узел(node) ничего не написав {}
+\draw (0,-0.7) to[D-] (3,-1); % если метка не нужна, то node {} не нужна
 \end{circuitikz}
 \end{verbatim}
 
 \begin{circuitikz}
 \ctikzset{bipoles/diode/width=0.2,bipoles/diode/height=0.2}
-\draw (0,0) to[D*] (3,0) node[right] {}; 
-\draw (0,-1) to[D*] (3,-1);
+\draw (0,0) to[D-] (3,0) node[right] {}; 
+\draw (0,-0.7) to[D-] (3,-0.7);
 \end{circuitikz}
 
 
