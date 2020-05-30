@@ -1,0 +1,40 @@
+\begin{circuitikz}[scale=0.3]
+\ctikzset{bipoles/americaninductor/coils=3} %  3 витка
+\ctikzset{bipoles/diode/width=0.1}
+\ctikzset{bipoles/diode/height=0.1}
+\ctikzset{bipoles/americaninductor/height=0.24}
+\ctikzset{bipoles/americaninductor/coil height=0.05}
+\ctikzset{bipoles/americaninductor/width=0.24}
+\ctikzset{nodes width/.initial=.02}
+
+\draw (3,8) to[american inductor,o-] (3,5.5);
+\draw[fill] (3.25, 7.5) circle (2pt);
+\draw (4.5,8) to[american inductor,o-*] (4.5,5.5); %-* соединение
+\draw[fill] (4.75, 7.5) circle (2pt);
+\draw (6,8) to[american inductor,o-] (6, 5.5);
+\draw[fill] (6.25, 7.5) circle (2pt);
+\draw (3,5.5) -- (6,5.5);
+
+\draw[fill] (2.6,4.97) rectangle (6.4,5.03);
+
+\draw (3,4.5) to[american inductor] (3,2) node(a){}; % node[above left]{\small{a}};
+\draw[fill] (3.25, 2.5) circle (2pt);
+\draw (4.5,4.5) to[american inductor,*-] (4.5,2) node(b){}; % node[above left]{\small{b}};
+\draw[fill] (4.75, 2.5) circle (2pt);
+\draw (6,4.5) to[american inductor] (6,2) node(c){}; % node[above left]{\small{c}};
+\draw[fill] (6.25, 2.5) circle (2pt);
+\draw (3,4.5) -- (6,4.5);
+
+\draw(3.75,-0.5) to[D-] (3.75,1) node(v1){};
+\draw(3.75,-2) node(v4){} to[D-, -*] (3.75,-0.5) node(na) {};
+        \draw (a.center) |- (na.center);
+\draw(5.25,-0.50) to[D-,-*] (5.25,1);
+\draw(5.25,-2) to[D-, *-*] (5.25,-0.5) node(nb) {};
+        \draw (b.center) |- (nb.center);
+\draw(6.75,-0.5) to[D-,-*] (6.75,1);
+\draw(6.75,-2) to[D-, *-*] (6.75,-0.5) node(nc) {};
+        \draw (c.center) |- (nc.center);
+\draw (v1.center) to[short,-o] ++ (4,0) node[right](plus){\tiny{+}};
+\draw (v4.center) to[short,-o] ++ (4,0) node[right](minus){-};
+\end{circuitikz}
+
